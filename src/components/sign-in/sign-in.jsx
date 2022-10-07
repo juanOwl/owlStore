@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useContext, useEffect  } from 'react'
 import React from 'react'
 import './sign-in.styles.scss'
 import Button from '../button/button'
+import { UserContext } from '../../contexts/user-context'
 
 import { signInWithGooglePopup, createUserDocumentFromAuth, signInAuthUserWithEmailAndPassword } from '../../utils/firebase/firebase.utils'
 import FormInput from '../form-input/form-input'
@@ -11,11 +12,14 @@ const defaultFormFields = {
     password: '',
 }
 
+
 const SignInForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields)
-    const { email, password} = formFields
+    const [toggleSuccess, setToggleSuccess] = useState(false)
+    const { email, password } = formFields
+    const { setCurrentUser, currentUser } = useContext(UserContext)
 
-    console.log(formFields)
+    // console.log(formFields)
 
     const resetFormFields = () => {
         setFormFields(defaultFormFields)
@@ -23,33 +27,39 @@ const SignInForm = () => {
 
     const signInWithGoogle = async () => {
         const { user } = await signInWithGooglePopup()
+        setCurrentUser(user)
         await createUserDocumentFromAuth(user)
     }
+
 
     const handleSubmit = async (event) => {
         event.preventDefault()
 
 
         try {
-            const response = await signInAuthUserWithEmailAndPassword(
-              email,
-              password
+            const user = await signInAuthUserWithEmailAndPassword(
+                email,
+                password
             );
-            console.log(response);
+            setCurrentUser(user)
             resetFormFields();
-          } catch (error) {
+            console.log(currentUser)
+        } catch (error) {
             switch (error.code) {
-              case 'auth/wrong-password':
-                alert('incorrect password for email');
-                break;
-              case 'auth/user-not-found':
-                alert('no user associated with this email');
-                break;
-              default:
-                console.log(error);
+                case 'auth/wrong-password': 
+                    alert('incorrect password for email');
+                    break;
+                case 'auth/user-not-found':
+                    alert('no user associated with this email');
+                    break;
+                default:
+                    console.log(error);
             }
-          }
-        };
+        }
+    };
+    useEffect(() => {
+        currentUser ? setToggleSuccess(true) : setToggleSuccess(false)
+    }, [currentUser])
 
 
     const handleChange = (event) => {
@@ -64,31 +74,37 @@ const SignInForm = () => {
             <span>Sign in with your Email And Password</span>
             <form onSubmit={handleSubmit}>
                 <FormInput
-                label="Email"
-                inputOptions= {{
-                    type:'email',
-                    required:true,
-                    onChange: handleChange,
-                    name: "email",
-                    value: email
-                }}/>
-                
+                    label="Email"
+                    inputOptions={{
+                        type: 'email',
+                        required: true,
+                        onChange: handleChange,
+                        name: "email",
+                        value: email
+                    }} />
+
 
 
                 <FormInput
-                label="Password"
-                inputOptions= {{
-                    type:'password',
-                    required:true,
-                    onChange: handleChange,
-                    name: "password",
-                    value: password
-                }}/>
+                    label="Password"
+                    inputOptions={{
+                        type: 'password',
+                        required: true,
+                        onChange: handleChange,
+                        name: "password",
+                        value: password
+                    }} />
 
                 <div className='buttons-container'>
-                    <Button  type='submit' children="LOGIN"></Button>
-                    <Button   type= 'button' onClick={signInWithGoogle} buttonType='google' children="Google Sign-In"></Button>
+                    <Button      type='submit' children="LOGIN"></Button>
+                    <Button type='button' onClick={signInWithGoogle} buttonType='google' children="Google Sign-In"></Button>
                 </div>
+                {toggleSuccess ? (
+                    <div className='logged-in'><b>LOGGED IN SUCCESSFULLY</b></div>
+                )
+                    :
+                    (null)
+                }
 
             </form>
         </div >
