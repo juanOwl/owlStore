@@ -1,11 +1,11 @@
 import './product-diretory.scss'
 
 // import { useContext } from 'react'
-// import { ProductsContext} from '../../../contexts/products-context'
+// import { ProductsContext } from '../../contexts/products-context'
 
 import ProductContainer from '../product-container/product-container'
 
-// const product = useContext(ProductsContext)
+// const {currentProduct} = useContext(ProductsContext)
 
 const ProductDiretory = ({product}) => {
     return(

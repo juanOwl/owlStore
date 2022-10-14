@@ -21,6 +21,11 @@
       display: flex;
       flex-direction: column;
       overflow: scroll;
+
+      img{
+        height:120px;
+        width: 180px;
+      }
     }
   
     button {
