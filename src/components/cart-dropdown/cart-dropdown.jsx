@@ -39,7 +39,7 @@ const CartDropdown = () => {
                         <img src={product.imageUrl}></img>
                         <span> {`Quantity: ${product.quantity}x `}</span>
                         <p style={{display:'inline'}}>{`Price: ${product.price}$`}</p>
-                        <FontAwesomeIcon icon="fa-regular fa-trash-can" />
+                        {/* <FontAwesomeIcon icon="fa-regular fa-trash-can" /> */}
                     </div>)
                 )}
 
