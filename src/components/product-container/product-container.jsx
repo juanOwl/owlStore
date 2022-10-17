@@ -36,9 +36,10 @@ const ProductContainer = ({ productInfo }) => {
             <div className='footer'>
                 <span className='product-name'>{name}</span>
                 <span className='product-price'>{`${price}$`}</span>
-                <button onClick={addProduct}>TESTE</button>
             </div>
+            <div  onClick={addProduct} className='button-containerB'>
             <Button buttonType='inverted' children={'ADD TO CART'} />
+            </div>
         </div>
 
     )

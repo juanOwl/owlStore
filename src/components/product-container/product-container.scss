@@ -12,14 +12,24 @@
       object-fit: cover;
       margin-bottom: 5px;
     }
-  
+    
+    .button-container-B{
+      display: flex;
+      align-self:center;
+      justify-self: center;
+      justify-content: center;
+      align-items: center;
+
+    }
     button {
       width: 80%;
       opacity: 0.7;
       position: absolute;
+      left:30px;
       top: 255px;
       display: none;
     }
+  
   
     &:hover {
       img {
