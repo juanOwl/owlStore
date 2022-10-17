@@ -11,12 +11,12 @@ import { ProductsContext } from '../../contexts/products-context'
 const CartDropdown = () => {
     const { setCartProducts, cartProducts } = useContext(CartContext)
     const { setProducts, currentProducts } = useContext(ProductsContext)
-    let [forceRemount, setForceRemount] = useState(0)
-    useEffect(() => {
-        setForceRemount(forceRemount++)
-        console.log(forceRemount)
-    }, [cartProducts.length]
-    )
+    // let [forceRemount, setForceRemount] = useState(0)
+    // useEffect(() => {
+    //     setForceRemount(forceRemount++)
+    //     console.log(forceRemount)
+    // }, [cartProducts.length]
+    // )
 
     // useEffect(() => {}, [cartProducts])
     const clearCart = () => {
@@ -34,8 +34,12 @@ const CartDropdown = () => {
         <div className='cart-dropdown-container'>
             <div className='cart-items' >
                 {cartProducts.map((product) => (
-                    <div key={product.id}>
+                    
+                    <div className='product-item' key={product.id}>
                         <img src={product.imageUrl}></img>
+                        <span> {`Quantity: ${product.quantity}x `}</span>
+                        <p style={{display:'inline'}}>{`Price: ${product.price}$`}</p>
+                        <FontAwesomeIcon icon="fa-regular fa-trash-can" />
                     </div>)
                 )}
 
