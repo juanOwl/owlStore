@@ -1,53 +1,42 @@
-import './cart-dropdown.scss'
-import Button from '../button/button'
+import "./cart-dropdown.scss";
+import Button from "../button/button";
 
-import CartProduct from '../product-on-cart/product-on-cart'
+import CartProduct from "../product-on-cart/product-on-cart";
 
-import { useContext, useEffect, useState } from 'react'
-import { CartContext } from '../../contexts/cart-context'
-import { ProductsContext } from '../../contexts/products-context'
-
+import { useContext } from "react";
+import { CartContext } from "../../contexts/cart-context";
+import { ProductsContext } from "../../contexts/products-context";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTrashCan
+} from "@fortawesome/free-solid-svg-icons";
 
 const CartDropdown = () => {
-    const { setCartProducts, cartProducts } = useContext(CartContext)
-    const { setProducts, currentProducts } = useContext(ProductsContext)
-    // let [forceRemount, setForceRemount] = useState(0)
-    // useEffect(() => {
-    //     setForceRemount(forceRemount++)
-    //     console.log(forceRemount)
-    // }, [cartProducts.length]
-    // )
-
-    // useEffect(() => {}, [cartProducts])
-    const clearCart = () => {
-        const cleanProducts = currentProducts
-        console.log(cleanProducts)
-        for (let i in cleanProducts) {
-            if (cleanProducts[i].hasOwnProperty('quantity')) {
-                cleanProducts[i].quantity = 0
-            }
-        }
-        setProducts(cleanProducts)
-        setCartProducts([])
+  const { setCartProducts, cartProducts } = useContext(CartContext);
+  const { setProducts, currentProducts } = useContext(ProductsContext);
+  const clearCart = () => {
+    const cleanProducts = [...currentProducts];
+    console.log(cleanProducts);
+    for (let i in cleanProducts) {
+      if (cleanProducts[i].hasOwnProperty("quantity")) {
+        cleanProducts[i].quantity = 0;
+      }
     }
-    return (
-        <div className='cart-dropdown-container'>
-            <div className='cart-items' >
-                {cartProducts.map((product) => (
-                    
-                    <div className='product-item' key={product.id}>
-                        <img src={product.imageUrl}></img>
-                        <span> {`Quantity: ${product.quantity}x `}</span>
-                        <p style={{display:'inline'}}>{`Price: ${product.price}$`}</p>
-                        {/* <FontAwesomeIcon icon="fa-regular fa-trash-can" /> */}
-                    </div>)
-                )}
-
-            </div>
-            <button onClick={clearCart}>CLEAR CART</button>
-            <Button children={'FINALIZE PURCHASE'} />
-
-        </div>
-    )
-}
-export default CartDropdown
+    setProducts(cleanProducts);
+    setCartProducts([]);
+  };
+  return (
+    <div className="cart-dropdown-container">
+      <div className="cart-items">
+        {cartProducts.map((product) => (
+          <CartProduct key={product} cartItem={product} />
+        ))}
+      </div>
+      <button className="clear-cart" onClick={clearCart}>
+        CLEAR CART <FontAwesomeIcon icon={faTrashCan} className="trash-icon" />
+      </button>
+      <Button children={"FINALIZE PURCHASE"} />
+    </div>
+  );
+};
+export default CartDropdown;
