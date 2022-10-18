@@ -4,4 +4,12 @@
     img{
         margin-right: 10px;
     }
+
+    .remove-button {
+        cursor:pointer;
+        
+        .trash-icon{
+            color:rgb(237, 129, 129)
+        }
+    }
 }

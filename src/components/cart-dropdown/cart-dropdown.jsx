@@ -12,8 +12,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const CartDropdown = () => {
-  const { setCartProducts, cartProducts } = useContext(CartContext);
+  const { setCartProducts, cartProducts, removeProduct } = useContext(CartContext);
   const { setProducts, currentProducts } = useContext(ProductsContext);
+
+
   const clearCart = () => {
     const cleanProducts = [...currentProducts];
     console.log(cleanProducts);
@@ -29,7 +31,9 @@ const CartDropdown = () => {
     <div className="cart-dropdown-container">
       <div className="cart-items">
         {cartProducts.map((product) => (
-          <CartProduct key={product} cartItem={product} />
+          <div>
+            <CartProduct key={product} cartItem={product} removeItem = {() => removeProduct(product, cartProducts)} />
+          </div>
         ))}
       </div>
       <button className="clear-cart" onClick={clearCart}>
