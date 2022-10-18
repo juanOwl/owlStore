@@ -9,7 +9,8 @@ export const CartContext = createContext({
   addProduct: () => {},
   removeProduct: () => {},
   totalPrice: 0,
-  setTotalPrice: () => {}
+  setTotalPrice: () => {},
+  decreaseQuantity: () => {}
 });
 
 export const CartProvider = ({ children }) => {
@@ -53,12 +54,33 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  const decreaseQuantity = (productInfo, productsOnCart) => {
+    const cartArray = [...productsOnCart];
+    if (cartArray.includes(productInfo)) {
+      const index = cartArray.findIndex((object) => {
+        return object === productInfo;
+      });
+      if (cartArray[index].quantity !== 0) {
+        cartArray[index].quantity--;
+      }
+      if (cartArray[index].quantity === 0){
+          cartArray.splice(index, 1)
+      }
+// (cartArray[index].quantity == 1)
+      setCartProducts(cartArray);
+    }
+
+  }
+
   useEffect( () => {
     let totalPriceCopy = 0 
     for(let i in cartProducts) {
       totalPriceCopy += (cartProducts[i].quantity * cartProducts[i].price);
       // console.log(totalPriceCopy)
       setTotalPrice(totalPriceCopy)
+    }
+    if (cartProducts.length === 0) {
+      setTotalPrice(0)
     }
   }, [cartProducts]
   )
@@ -72,7 +94,8 @@ export const CartProvider = ({ children }) => {
     addProduct,
     removeProduct,
     totalPrice,
-    setTotalPrice
+    setTotalPrice,
+    decreaseQuantity
   };
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
