@@ -11,20 +11,15 @@ import { ReactComponent as OwlLogo } from '../../assets/dribbble_owl_02a-removeb
 import { UserContext } from "../../contexts/user-context";
 import { CartContext } from "../../contexts/cart-context";
 import { userSignOut } from "../../utils/firebase/firebase.utils";
-import { useEffect, useState } from "react";
 
 
 const Navigation = () => {
   const { currentUser } = useContext(UserContext)
-  const { isCartOpen, cartProducts } = useContext(CartContext)
+  const { isCartOpen } = useContext(CartContext)
 
   const signOutHandler = async () => {
     await userSignOut()
   }
-  let [forceRemount, setForceRemount] = useState(0)
-  useEffect(()=>{
-    setForceRemount(forceRemount++)}, [cartProducts.length]
-  )
 
 
   return (
@@ -40,7 +35,7 @@ const Navigation = () => {
             (<Link className="nav-link" to="/sign"> SIGN IN </Link>)}
           <CartIcon />
         </div>
-        {isCartOpen ? <CartDropdown key={forceRemount}/> : null}
+        {isCartOpen ? <CartDropdown/> : null}
       </div>
       <Outlet />
     </Fragment>

@@ -12,7 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const CartDropdown = () => {
-  const { setCartProducts, cartProducts, removeProduct } = useContext(CartContext);
+  const { setCartProducts, cartProducts, removeProduct, totalPrice, setTotalPrice } = useContext(CartContext);
   const { setProducts, currentProducts } = useContext(ProductsContext);
 
 
@@ -26,6 +26,7 @@ const CartDropdown = () => {
     }
     setProducts(cleanProducts);
     setCartProducts([]);
+    setTotalPrice(0)
   };
   return (
     <div className="cart-dropdown-container">
@@ -39,6 +40,7 @@ const CartDropdown = () => {
       <button className="clear-cart" onClick={clearCart}>
         CLEAR CART <FontAwesomeIcon icon={faTrashCan} className="trash-icon" />
       </button>
+      <div>Total: {totalPrice}$</div>
       <Button children={"FINALIZE PURCHASE"} />
     </div>
   );
