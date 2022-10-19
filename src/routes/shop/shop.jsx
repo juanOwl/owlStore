@@ -1,12 +1,12 @@
 import { useContext } from "react"
-import { ProductsContext } from "../../contexts/products-context"
+import { CategoriesContext } from "../../contexts/categories-context"
 
 import ProductDiretory from "../../components/product-diretory/product-diretory"
 
 const Shop = () => {
-    const {currentProducts} = useContext(ProductsContext)
+    const {currentCategories} = useContext(CategoriesContext)
     return(
-        <ProductDiretory product={currentProducts}/>
+        <ProductDiretory categories={currentCategories}/>
     )
 }
 

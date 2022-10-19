@@ -16,7 +16,7 @@ const CheckoutItem = ({ product }) => {
         {product.quantity}
         <span className='add-button' onClick={() => addProduct(product, cartProducts)}><b>&nbsp;&nbsp; +</b></span>
       </span>
-      <span className="price">{product.price}</span>
+      <span className="price">{product.price} $</span>
       <div
         onClick={() => removeProduct(product, cartProducts)}
         className="remove-button"

@@ -6,7 +6,7 @@ import CartProduct from "../product-on-cart/product-on-cart";
 
 import { useContext } from "react";
 import { CartContext } from "../../contexts/cart-context";
-import { ProductsContext } from "../../contexts/products-context";
+import { CategoriesContext } from "../../contexts/categories-context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
@@ -18,17 +18,17 @@ const CartDropdown = () => {
     totalPrice,
     setTotalPrice,
   } = useContext(CartContext);
-  const { setProducts, currentProducts } = useContext(ProductsContext);
+  const { setCategories, currentCategories } = useContext(CategoriesContext);
 
   const clearCart = () => {
-    const cleanProducts = [...currentProducts];
+    const cleanProducts = [...currentCategories];
     console.log(cleanProducts);
     for (let i in cleanProducts) {
       if (cleanProducts[i].hasOwnProperty("quantity")) {
         cleanProducts[i].quantity = 0;
       }
     }
-    setProducts(cleanProducts);
+    setCategories(cleanProducts);
     setCartProducts([]);
     setTotalPrice(0);
   };
