@@ -17,7 +17,7 @@ const ProductDiretory = ({ categories }) => {
     },
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 3,
+      items: 4,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
@@ -33,7 +33,7 @@ const ProductDiretory = ({ categories }) => {
       {Object.keys(categories).map((title) => (
         <div className="TESTE">
           <h2>{title}</h2>
-          <Carousel responsive={responsive} infinite={true} >
+          <Carousel showDots={true} responsive={responsive} infinite={true} >
                 {categories[title].map((product) => (
                     <div>
                         <ProductContainer key={product.id} productInfo={product} />

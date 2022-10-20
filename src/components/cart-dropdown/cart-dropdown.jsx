@@ -10,6 +10,7 @@ import { CategoriesContext } from "../../contexts/categories-context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
+
 const CartDropdown = () => {
   const {
     setCartProducts,
@@ -17,17 +18,21 @@ const CartDropdown = () => {
     removeProduct,
     totalPrice,
     setTotalPrice,
+    setIsCartOpen
   } = useContext(CartContext);
   const { setCategories, currentCategories } = useContext(CategoriesContext);
 
   const clearCart = () => {
-    const cleanProducts = [...currentCategories];
+    const cleanProducts = { ...currentCategories };
     console.log(cleanProducts);
-    for (let i in cleanProducts) {
-      if (cleanProducts[i].hasOwnProperty("quantity")) {
-        cleanProducts[i].quantity = 0;
-      }
-    }
+    Object.keys(cleanProducts).map((title) =>
+      cleanProducts[title].map((item) => {
+        if (item.hasOwnProperty("quantity")) {
+          item.quantity = 0;
+        }
+      })
+    );
+
     setCategories(cleanProducts);
     setCartProducts([]);
     setTotalPrice(0);
@@ -50,7 +55,9 @@ const CartDropdown = () => {
       </button>
       <div>Total: {totalPrice}$</div>
       <Link className="nav-link" to="/checkout">
-        <Button children={"FINALIZE PURCHASE"} />
+        <div onClick={() => setIsCartOpen(false)}>
+          <Button children={"FINALIZE PURCHASE"} />
+        </div>
       </Link>
     </div>
   );
